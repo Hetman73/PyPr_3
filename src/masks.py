@@ -2,6 +2,7 @@ def get_mask_card_number(numbers: int) -> str:
     """Функция маскировки номера краты"""
 
     card_number = str(numbers)
+
     slice_1 = card_number[0:4]
     slice_2 = card_number[4:6]
     slice_3 = card_number[-4:]
