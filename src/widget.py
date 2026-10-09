@@ -1,4 +1,3 @@
-
 from typing import Union
 import re
 
@@ -21,19 +20,14 @@ def mask_account_card(arg: Union[str, int]) -> str:
 
     elif len(user_digits) >= 20:
 
-
         return f"{user_text} **{user_digits[-4:]}"
 
     else:
 
-        return "Вы ошиблись"
-
-
+        return ("Вы ошибл"
+                "ись")
 
 
 if __name__ == "__main__":
-        result = mask_account_card(str(input("Ввод:")))
-        print(result)
-
-
-
+    result = mask_account_card(str(input("Ввод:")))
+    print(result)
