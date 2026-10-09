@@ -28,6 +28,21 @@ def mask_account_card(arg: Union[str, int]) -> str:
                 "ись")
 
 
+# if __name__ == "__main__":
+#     result = mask_account_card(str(input("Ввод:")))
+#     print(result)
+
+
+
+def get_date(arg: str) -> str:
+    """Функция отфильтровки даты "ДД.ММ.ГГГГ" """
+
+    dates_list = re.findall(r"\d{4}-\d{2}-\d{2}", arg)
+    dates_str = " ".join(dates_list)
+    date_with_dots = dates_str.replace("-", ".")
+
+        return date_with_dots
+
 if __name__ == "__main__":
-    result = mask_account_card(str(input("Ввод:")))
+    result = get_date(str(input("Ввод:")))
     print(result)
