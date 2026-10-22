@@ -13,7 +13,6 @@ def test_get_date():
     assert get_date("not a date") == '..'
 
 
-
 @pytest.mark.parametrize(
     "string, expected_result",
     [
@@ -21,16 +20,11 @@ def test_get_date():
         ("2024-01-01T00:00:00", "01.01.2024"),
         ("2024-12-31T23:59:59", "31.12.2024"),
         ("", "пустой ввод"),
-        ("not a date", '..'),])
+        ("not a date", '..'), ])
 def test_get_date(string, expected_result):
     assert get_date(string) == expected_result
 
 
-
-
-# @pytest.mark.parametrize(["string", "expected_result"], get_date_input)
-# def test_get_date(string, expected_result):
-#     assert get_date(string) == expected_result
-
-
-
+@pytest.mark.parametrize(["string", "expected_result"], get_date_input())
+def test_get_date(string, expected_result):
+    assert get_date(string) == expected_result

@@ -19,6 +19,7 @@ def test_mask_account_card():
 def test_mask_account_card(string, expected_result):
     assert mask_account_card(string) == expected_result
 
-# @pytest.mark.parametrize("string, expected_result", account_card())
-# def test_mask_account_card(string, expected_result):
-#     assert mask_account_card(string) == expected_result
+
+@pytest.mark.parametrize(["string", "expected_result"], account_card())
+def test_mask_account_card(string, expected_result):
+    assert mask_account_card(string) == expected_result

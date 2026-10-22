@@ -24,6 +24,6 @@ def test_get_mask_card_number(string, expected_result):
     assert get_mask_card_number(string) == expected_result
 
 
-# @pytest.mark.parametrize("string, expected_result", card_numbers())
-# def test_get_mask_card_number(string, expected_result):
-#     assert get_mask_card_number(string) == expected_result
+@pytest.mark.parametrize("string, expected_result", card_numbers())
+def test_get_mask_card_number(string, expected_result):
+    assert get_mask_card_number(string) == expected_result
