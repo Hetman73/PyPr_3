@@ -16,7 +16,7 @@ def get_mask_card_number(numbers: str) -> str:
     # Проверка на минимальную длину (в номере должно быть хотя бы 10 цифр
     # для формирования маски 4+2+4)
     if len(card_number) < 10:
-        return 'номер карты не полный'
+        return "номер карты не полный"
 
     else:
 
@@ -54,7 +54,7 @@ def get_mask_account(numbers: str) -> str:
     # Проверка  длину (в номере должно быть  20 цифр)
 
     if len(account_number) < 20:
-        return 'номер счета не полный'
+        return "номер счета не полный"
 
     else:
 

@@ -1,7 +1,7 @@
 import pytest
 
-from tests.conftest import account_numbers
 from src.masks import get_mask_account
+from tests.conftest import account_numbers
 
 
 def test_get_mask_account():

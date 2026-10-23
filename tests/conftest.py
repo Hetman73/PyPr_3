@@ -46,19 +46,46 @@ def get_date_input():
     ]  # Некорректная дата
 
 
+# @pytest.fixture()
 def filter_by_state_input():
-    return [
+    """Один кейс: (входной список, state, ожидаемый результат)."""
+    return (
+        [
+            {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+            {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+            {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+            {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+        ],
+        "EXECUTED",
+        [
+            {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+            {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+        ],
+    )
+
+
+@pytest.fixture(
+    params=[
         (
-            [  # source_list
+            # ВХОД
+            [
                 {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
                 {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
                 {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
                 {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
             ],
-            "EXECUTED",  # state
-            [  # expected_result
+            # ОЖИДАНИЕ
+            [
                 {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+                {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+                {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
                 {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
             ],
         ),
-    ]
+        # пустой список
+        ([], []),
+    ],
+    ids=["standard_sort_desc", "empty_list"],
+)  # даем обозначения тестам для понимания
+def sort_by_date_input(request):
+    return request.param

@@ -1,7 +1,7 @@
 import pytest
 
-from tests.conftest import get_date_input
 from src.widget import get_date
+from tests.conftest import get_date_input
 
 
 def test_get_date():
@@ -10,7 +10,7 @@ def test_get_date():
     assert get_date("2024-12-31T23:59:59") == "31.12.2024"
     assert get_date("") == "пустой ввод"
     assert get_date("   2024-05-01T12:00:00   ") == "01.05.2024"
-    assert get_date("not a date") == '..'
+    assert get_date("not a date") == ".."
 
 
 @pytest.mark.parametrize(
@@ -20,7 +20,9 @@ def test_get_date():
         ("2024-01-01T00:00:00", "01.01.2024"),
         ("2024-12-31T23:59:59", "31.12.2024"),
         ("", "пустой ввод"),
-        ("not a date", '..'), ])
+        ("not a date", ".."),
+    ],
+)
 def test_get_date(string, expected_result):
     assert get_date(string) == expected_result
 
