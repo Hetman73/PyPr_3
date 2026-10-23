@@ -9,7 +9,6 @@
 
 
 
-
   
 
 ## Содержание
@@ -117,12 +116,67 @@ state (по умолчанию 'EXECUTED'). Функция возвращает 
 
 
 
+## Тестирование
+
+### test_get_mask_card_number ###
+
+Использованы инструменты тестирования: 
++ **assert** 
++ **@pytest.mark.parametrize** - прямой ввод данных
++ **@pytest.mark.parametrize** - данные в виде аргумента - функция **card_numbers** из **conftest.py**
+
+
+### test_get_mask_account ###
+
+Использованы инструменты тестирования: 
++ **assert** 
++ **@pytest.mark.parametrize** - прямой ввод данных
++ **@pytest.mark.parametrize** - данные в виде аргумента - функция **account_numbers** из **conftest.py**
+
+
+### test_mask_account_card ###
+
+Использованы инструменты тестирования: 
++ **assert** 
++ **@pytest.mark.parametrize** - прямой ввод данных
++ **@pytest.mark.parametrize** - данные в виде аргумента - функция **account_card** из **conftest.py**
+
+
+### test_get_date ###
+
+Использованы инструменты тестирования: 
++ **assert** 
++ **@pytest.mark.parametrize** - прямой ввод данных
++ **@pytest.mark.parametrize** - данные в виде аргумента - функция **get_date_input** из **conftest.py**
+
+
+### test_filter_by_state ###
+
+Использованы инструменты тестирования: 
++ **@pytest.fixture()
+def filter_by_state_input** 
+
+
+### test_sort_by_date ###
+
+Использованы инструменты тестирования:
++ **@pytest.fixture()**
+def sort_by_date_input(request):
+    return request.param
+
+
+### Покрытие тестами
+![Отчет о покрытии](./docs/images/coverage.png)
+
+
+
+
 
 
 ## Команда проекта
 
 
-- [Виктор Гетьманов](tg://resolve?domain=bzvyagintsev) — student
+- [Виктор Гетьманов] — student
 
 **Связаться со мной:**
 
