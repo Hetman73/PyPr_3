@@ -28,9 +28,9 @@ def get_mask_card_number(numbers: str) -> str:
     return f"{slice_1} {slice_2}** **** {slice_3}"
 
 
-if __name__ == "__main__":
-    result = get_mask_card_number(input("Введите номер карты без пробела:"))
-    print(result)
+# if __name__ == "__main__":
+#     result = get_mask_card_number(input("Введите номер карты без пробела:"))
+#     print(result)
 
 
 def get_mask_account(numbers: str) -> str:
@@ -62,6 +62,6 @@ def get_mask_account(numbers: str) -> str:
         return f"**{slice_1}"
 
 
-if __name__ == "__main__":
-    result = get_mask_account(input("Введите номер счёта без пробела:"))
-    print(result)
+# if __name__ == "__main__":
+#     result = get_mask_account(input("Введите номер счёта без пробела:"))
+#     print(result)
