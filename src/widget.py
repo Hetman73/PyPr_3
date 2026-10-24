@@ -1,11 +1,26 @@
-from typing import Union
 import re
+from typing import Union
 
 
 def mask_account_card(arg: Union[str, int]) -> str:
-    """Функция обрабатывать информацию о картах и счетах."""
+    """функция обрабатывать информацию как о картах, так и о счетах.
+    Принимает один аргумент — строку, содержащую тип и номер карты или счета.
+    Аргументом является строка типа
+    Visa Platinum 7000792289606361
+    , или
+    Maestro 7000792289606361
+    , или
+    Счет 73654108430135874305
+    Функция возвращать строку с замаскированным номером. Для карт и счетов отрабатывается
+    разные типы маскировки.
+    Пример для карты
+    Visa Platinum 7000792289606361  # входной аргумент
+    Visa Platinum 7000 79** **** 6361  # выход функции
+    Пример для счета
+    Счет 73654108430135874305  # входной аргумент
+    Счет **4305  # выход функции"""
 
-    user_info = str(arg).replace(" ", " ").replace("-", "")
+    user_info = str(arg).replace("-", "")
 
     user_text = "".join(re.findall(r"\D+", user_info))
     user_digits = "".join(re.findall(r"\d+", user_info))
@@ -16,16 +31,15 @@ def mask_account_card(arg: Union[str, int]) -> str:
         slice_2 = user_digits[4:6]
         slice_3 = user_digits[-4:]
 
-        return f"{user_text} {slice_1} {slice_2}** **** {slice_3}"
+        return f"{user_text}{slice_1} {slice_2}** **** {slice_3}"
 
     elif len(user_digits) >= 20:
 
-        return f"{user_text} **{user_digits[-4:]}"
+        return f"{user_text}**{user_digits[-4:]}"
 
     else:
 
-        return ("Вы ошибл"
-                "ись")
+        return "номер счета не полный"
 
 
 # if __name__ == "__main__":
@@ -34,7 +48,15 @@ def mask_account_card(arg: Union[str, int]) -> str:
 
 
 def get_date(arg: str) -> str:
-    """Функция отфильтровки даты "ДД.ММ.ГГГГ" """
+    """Функция отфильтровки даты,"
+    принимает на вход строку с датой в формате
+    "2024-03-11T02:26:18.671407"
+    и возвращает строку с датой в формате
+    "ДД.ММ.ГГГГ"""
+
+    # Обработка пустого ввода.
+    if arg is None or arg == "":
+        return "пустой ввод"
 
     dates_list = set(re.findall(r"\d{4}-\d{2}-\d{2}", arg))
     dates_str = " ".join(dates_list)
@@ -44,6 +66,6 @@ def get_date(arg: str) -> str:
     return result_dates
 
 
-if __name__ == "__main__":
-    result = get_date(str(input("Ввод:")))
-    print(result)
+# if __name__ == "__main__":
+#     result = get_date(str(input("Ввод:")))
+#     print(result)

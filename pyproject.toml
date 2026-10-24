@@ -25,7 +25,8 @@ lint = [
 ]
 dev = [
     "commitizen (>=4.19.2,<5.0.0)",
-    "pytest (>=9.1.1,<10.0.0)"
+    "pytest (>=9.1.1,<10.0.0)",
+    "pytest-cov (>=7.1.0,<8.0.0)"
 ]
 
 
@@ -60,3 +61,8 @@ exclude = '''
 [tool.isort]
 # максимальная длина строки
 line_length = 119
+
+
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-report=html --cov-report=term-missing"
