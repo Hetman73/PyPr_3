@@ -104,6 +104,61 @@ state (по умолчанию 'EXECUTED'). Функция возвращает 
 список, отсортированный по дате (date).
 
 
+### Модуль generators
+- #### [filter_by_currency]()
+  + Как работает эта функция:
+Принимает на вход список словарей, представляющих транзакции.
+Функция должна возвращать итератор, который поочередно выдает транзакции, 
+где валюта операции соответствует заданной (например, USD).
+
+- #### [transaction_descriptions]()
+  + Как работает эта функция:
+генератор, который принимает список словарей с транзакциями и возвращает 
+описание каждой операции по очереди.
+
+Пример использования функции
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
+
+```
+ Перевод организации 
+ Перевод со счета на счет
+ Перевод со счета на счет
+ Перевод с карты на карту
+ Перевод организации
+```
+ 
+
+- #### [card_number_generator]()
+  + Как работает эта функция:
+
+генератор, который выдает номера банковских карт в формате XXXX XXXX XXXX XXXX
+X — цифра номера карты. Генератор может сгенерировать номера карт в заданном диапазоне 
+от 0000 0000 0000 0001 до 9999 9999 9999 9999.
+Генератор должен принимать начальное и конечное значения для генерации диапазона номеров.
+
+Пример использования функции
+for card_number in card_number_generator(1, 5):
+    print(card_number)
+
+```
+0000 0000 0000 0001
+0000 0000 0000 0002
+0000 0000 0000 0003
+0000 0000 0000 0004
+0000 0000 0000 0005
+```
+ 
+
+
+
+
+
+
+
+
+
 ### Установка зависимостей
 
 Для установки зависимостей, выполните команду: **pip install -r requirements.txt**
@@ -160,10 +215,35 @@ def filter_by_state_input**
 ### test_sort_by_date ###
 
 Использованы инструменты тестирования:
-+ **@pytest.fixture()**
++ **@pytest.mark.parametrize()**
 def sort_by_date_input(request):
     return request.param
 
+### `test_filter_by_currency`
+
+💡 Использованы инструменты тестирования: `@pytest.fixture`.
+
+* **Фикстура `transactions()`**: подготавливает тестовые данные.
+* **`test_usd_returns_two_transactions(transactions)`**: `currency='USD'` -> ровно 2 транзакции с id 939719570 и 142264268.
+* **`test_rub_returns_one_transaction(transactions)`**: `currency='RUB'` -> ровно 1 транзакция с id 873106923.
+* **`test_eur_returns_empty_iterator(transactions)`**: `currency='EUR'` -> пустой итератор, `next()` -> `StopIteration`.
+
+
+### `test_transaction_descriptions`
+
+💡 Использованы инструменты тестирования: `@pytest.fixture`.
+
+* **Фикстура `transactions()`**: подготавливает тестовые данные.
+* **`test_returns_descriptions_in_order(transactions)`**: выдаёт описания всех транзакций по порядку.
+* **`test_returns_iterator(transactions)`**: возвращает именно итератор, а не список.
+* **`test_empty_input()`**: для пустого списка итератор сразу исчерпан.
+
+
+### `test_card_number_generator`
+
+💡 Использованы инструменты тестирования: `@pytest.mark.parametrize("start, end, expected")`.
+
+* **`test_returns_number_card(start, end, expected)`**: проверяет, что генератор возвращает номера карт в ожидаемом формате и порядке с помощью `assert list(card_number_generator(start, end)) == expected`.
 
 ### Покрытие тестами
 ![Отчет о покрытии](./docs/images/coverage.png)
