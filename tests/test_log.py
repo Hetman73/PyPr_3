@@ -3,8 +3,9 @@ import pytest
 from src.decorators import log
 
 
-def test_log_success_to_console(capsys): # capture system output — «захват системного вывода, признак консоли».
+def test_log_success_to_console(capsys):  # capture system output — «захват системного вывода, признак консоли».
     """Успех: логирует в консоль."""
+
     @log(filename=None)
     def my_function(x, y):
         return x + y
@@ -13,7 +14,7 @@ def test_log_success_to_console(capsys): # capture system output — «захв�
 
     assert result == 3  # функция вернула правильный результат
     captured = capsys.readouterr()
-    # время непредсказуемо — проверяем через регулярку
+    # время непредсказуемо — проверяем через регулярку, библиотека re
     assert re.match(
         r"^my_function ok, Заняло \d+\.\d+ секунд\n$",
         captured.out
@@ -40,6 +41,7 @@ def test_log_success_to_file(tmp_path):
 
 def test_log_error_to_console(capsys):
     """Ошибка: логирует и пробрасывает исключение."""
+
     @log(filename=None)
     def my_function(x, y):
         return x + y

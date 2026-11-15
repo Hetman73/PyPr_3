@@ -82,8 +82,8 @@ def _write(message, filename=None):
             f.write(message + "\n")
 
 
-#@log()
-@log(filename="docs/mylog.txt")
+@log()
+# @log(filename="docs/mylog.txt")
 def my_function(x, y):
     return x + y
 
