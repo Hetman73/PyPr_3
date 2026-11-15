@@ -8,3 +8,4 @@ my_function ok, Заняло 0.000002 секунд
 my_function ok, Заняло 0.000002 секунд
 my_function ok, Заняло 0.000003 секунд
 my_function ok, Заняло 0.000004 секунд
+my_function ok, Заняло 0.000002 секунд
