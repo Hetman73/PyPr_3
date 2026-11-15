@@ -1,0 +1,13 @@
+my_function ok, Заняло 0.000001 секунд
+my_function error: TypeError. Inputs: args=(1, '2'), kwargs={}, Заняло 0.000003 секунд
+my_function ok, Заняло 0.000001 секунд
+my_function ok, Заняло 0.000002 секунд
+my_function ok, Заняло 0.000002 секунд
+my_function ok, Заняло 0.000002 секунд
+my_function ok, Заняло 0.000002 секунд
+my_function ok, Заняло 0.000002 секунд
+my_function ok, Заняло 0.000003 секунд
+my_function ok, Заняло 0.000004 секунд
+my_function ok, Заняло 0.000002 секунд
+my_function error: TypeError. Inputs: args=(1, '2'), kwargs={}, Заняло 0.000002 секунд
+my_function ok, Заняло 0.000001 секунд
