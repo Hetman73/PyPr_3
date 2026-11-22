@@ -9,7 +9,7 @@ USD
 EUR
 , происходит обращение к внешнему API для получения текущего курса валют и
 конвертации суммы операции в рубли. Для конвертации валюты воспользуйтесь
-Exchange Rates Data API: https://apilayer.com/exchangerates_data-api. """
+Exchange Rates Data API: https://apilayer.com/exchangerates_data-api.(данная ссылка на работает) """
 
 import os
 import requests
