@@ -7,7 +7,7 @@ from pathlib import Path
 import json
 
 
-def get_transactions_dict(input_file: str) -> list[dict]:
+def get_transactions_dict(input_file: str, base_dir: Path | None = None) -> list[dict]:
     """
     Загружает список транзакций из JSON-файла.
 
@@ -19,12 +19,16 @@ def get_transactions_dict(input_file: str) -> list[dict]:
 
     Args:
         input_file: имя файла в директории data/
+        base_dir: опциональный путь к корню проекта (для тестов)
 
     Returns:
         list[dict]: список транзакций или [] при ошибке
     """
     # Путь к корню проекта: utils.py -> src -> PythonProject_3
-    base_dir = Path(__file__).resolve().parent.parent
+    # Если base_dir не передан (например, при обычном запуске), вычисляем его
+    if base_dir is None:
+        base_dir = Path(__file__).resolve().parent.parent
+
     input_path = base_dir / 'data' / input_file
 
     # 1. Файл не найден
@@ -54,7 +58,7 @@ def get_transactions_dict(input_file: str) -> list[dict]:
     return data
 
 
-if __name__ == "__main__":
-    result = get_transactions_dict('operations.json')
-    print(f"Загружено транзакций: {len(result)}")
-    print(result)
+# if __name__ == "__main__":
+#     result = get_transactions_dict('operations.json')
+#     print(f"Загружено транзакций: {len(result)}")
+#     print(result)

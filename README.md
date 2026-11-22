@@ -181,6 +181,43 @@ filename
 
 
 
+### Модуль utils
+- #### [Функция get_transactions_dict]()
+  + Как работает эта функция:
+   
+Функция 
+**get_transactions_dict**
+
+Загружает список транзакций из JSON-файла.
+
+    Возвращает пустой список, если:
+    - файл не найден;
+    - файл пустой;
+    - содержимое не является списком;
+    - JSON некорректен.
+
+    Args:
+        input_file: имя файла в директории data/
+        base_dir: опциональный путь к корню проекта (для тестов)
+
+    Returns:
+        list[dict]: список транзакций или [] при ошибке
+
+
+
+
+### Модуль external_api
+**Функция `get_transaction_amount_in_rub`**
+  + Как работает эта функция:
+   
+Функция 
+**get_transaction_a]()mount_in_rub**
+
+```python
+Принимает транзакцию и возвращает сумму в рублях.
+Для USD/EUR запрашивает курс через Exchange Rates Data API.
+```
+
 
 
 
@@ -284,6 +321,25 @@ def sort_by_date_input(request):
 * **`def test_log_error_to_console(capsys):`**: Ошибка: логирует и пробрасывает исключение.
 * **`def test_log_error_to_file(tmp_path):`**: Ошибка: пишет в файл и пробрасывает исключение.
 
+
+
+### `test_utils`
+
+💡 Использованы инструменты тестирования: `assert`.
+
+* **`def test_missing_file_returns_empty_list(tmp_path):`**: Ошибка: файла нет → пустой список..
+* **`def test_loads_valid_transactions(tmp_path):`**: Успех: Корректный JSON со списком транзакций → возвращается этот список..
+* **`def test_not_a_list_returns_empty_list(tmp_path):`**: Ошибка: В JSON лежит объект, а не список → пустой список.
+
+
+
+## `test_external_api`
+
+💡 Использованы инструменты тестирования: `assert`.
+
+* **`def test_rub_transaction_returns_amount():`**: Успех: Если валюта RUB, API не вызывается, возвращается просто amount.
+* **`def test_usd_transaction_uses_api(mock_get, mock_getenv):`**: Успех: Если валюта USD, вызывается API (подменяем через Mock).
+* **`def test_eur_transaction_uses_api(mock_get, mock_getenv):`**: Успех: Если валюта EUR, тоже идет запрос к API.
 
 
 
