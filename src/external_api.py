@@ -1,4 +1,4 @@
-""" Реализуйте функцию, которая принимает на вход транзакцию и возвращает сумму
+"""Реализуйте функцию, которая принимает на вход транзакцию и возвращает сумму
 транзакции (
 amount
 ) в рублях, тип данных —
@@ -9,26 +9,28 @@ USD
 EUR
 , происходит обращение к внешнему API для получения текущего курса валют и
 конвертации суммы операции в рубли. Для конвертации валюты воспользуйтесь
-Exchange Rates Data API: https://apilayer.com/exchangerates_data-api.(данная ссылка на работает) """
+Exchange Rates Data API: https://apilayer.com/exchangerates_data-api.(данная ссылка на работает)"""
 
 import os
-import requests
 from typing import Any
+
+import requests
+
 
 def get_transaction_amount_in_rub(transaction: dict[str, Any]) -> float:
     """
     Принимает транзакцию и возвращает сумму в рублях.
     Для USD/EUR запрашивает курс через Exchange Rates Data API.
     """
-    amount = transaction.get('amount', 0.0)
-    currency = transaction.get('currency', 'RUB')
+    amount = transaction.get("amount", 0.0)
+    currency = transaction.get("currency", "RUB")
 
     # Если уже рубли — просто возвращаем сумму
-    if currency == 'RUB':
+    if currency == "RUB":
         return float(amount)
 
     # Получаем ключ из переменной окружения (безопасный способ)
-    api_key = os.getenv('API_KEY')
+    api_key = os.getenv("API_KEY")
     if not api_key:
         raise ValueError("Не задан API_KEY в переменных окружения")
 
@@ -36,17 +38,13 @@ def get_transaction_amount_in_rub(transaction: dict[str, Any]) -> float:
     # не найден)
     url = "https://api.apilayer.com/exchangerates_data/convert"
     headers = {"apikey": api_key}
-    params = {
-        "from": currency,
-        "to": "RUB",
-        "amount": amount
-    }
+    params = {"from": currency, "to": "RUB", "amount": amount}
 
     response = requests.get(url, headers=headers, params=params, timeout=10)
     response.raise_for_status()  # выбросит исключение при 4xx/5xx
 
     data = response.json()
-    return float(data['result'])
+    return float(data["result"])
 
 
 # if __name__ == "__main__":

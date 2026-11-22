@@ -1,10 +1,10 @@
-""" Реализуйте функцию, которая принимает на вход путь до JSON-файла и
+"""Реализуйте функцию, которая принимает на вход путь до JSON-файла и
 возвращает список словарей с данными о финансовых транзакциях.
 Если файл пустой, содержит не список или не найден,
-функция возвращает пустой список.  """
+функция возвращает пустой список."""
 
-from pathlib import Path
 import json
+from pathlib import Path
 
 
 def get_transactions_dict(input_file: str, base_dir: Path | None = None) -> list[dict]:
@@ -29,14 +29,14 @@ def get_transactions_dict(input_file: str, base_dir: Path | None = None) -> list
     if base_dir is None:
         base_dir = Path(__file__).resolve().parent.parent
 
-    input_path = base_dir / 'data' / input_file
+    input_path = base_dir / "data" / input_file
 
     # 1. Файл не найден
     if not input_path.is_file():
         return []
 
     try:
-        with open(input_path, 'r', encoding='utf-8') as file:
+        with open(input_path, "r", encoding="utf-8") as file:
             content = file.read().strip()
     except (OSError, UnicodeDecodeError):
         return []
