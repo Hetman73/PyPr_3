@@ -68,3 +68,8 @@ line_length = 119
 
 [tool.pytest.ini_options]
 addopts = "--cov=src --cov-report=html --cov-report=term-missing"
+
+
+[tool.poetry]
+package-mode = false
+name = "pythonproject-3"
