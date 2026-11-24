@@ -4,61 +4,79 @@
 функция возвращает пустой список."""
 
 import json
+import logging
 from pathlib import Path
 
+# ==========================================
+# 1. НАСТРОЙКА ЛОГИРОВАНИЯ (перед функцией)
+# ==========================================
+# Создаем отдельный логгер для модуля utils
+logger = logging.getLogger("utils")
+logger.setLevel(logging.DEBUG) # Уровень не меньше DEBUG
 
+# Создаем обработчик файла (file_handler)
+file_handler = logging.FileHandler("utils.log", mode="a", encoding="utf-8")
+
+# Создаем форматер (file_formatter)
+file_formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+# Устанавливаем форматер для обработчика и добавляем его к логгеру
+file_handler.setFormatter(file_formatter)
+logger.addHandler(file_handler)
+
+# ==========================================
+# 2. САМА ФУНКЦИЯ
+# ==========================================
 def get_transactions_dict(input_file: str, base_dir: Path | None = None) -> list[dict]:
     """
     Загружает список транзакций из JSON-файла.
 
-    Возвращает пустой список, если:
-    - файл не найден;
-    - файл пустой;
-    - содержимое не является списком;
-    - JSON некорректен.
-
-    Args:
-        input_file: имя файла в директории data/
-        base_dir: опциональный путь к корню проекта (для тестов)
-
-    Returns:
-        list[dict]: список транзакций или [] при ошибке
     """
-    # Путь к корню проекта: utils.py -> src -> PythonProject_3
-    # Если base_dir не передан (например, при обычном запуске), вычисляем его
     if base_dir is None:
         base_dir = Path(__file__).resolve().parent.parent
 
     input_path = base_dir / "data" / input_file
+    logger.info(f"Попытка загрузить файл: {input_path}")
 
-    # 1. Файл не найден
     if not input_path.is_file():
+        logger.error(f"Файл не найден: {input_path}")
         return []
 
     try:
         with open(input_path, "r", encoding="utf-8") as file:
             content = file.read().strip()
-    except (OSError, UnicodeDecodeError):
+    except (OSError, UnicodeDecodeError) as e:
+        logger.error(f"Ошибка чтения файла {input_path}: {e}")
         return []
 
-    # 2. Файл пустой (или содержит только пробелы)
     if not content:
+        logger.warning(f"Файл пустой: {input_path}")
         return []
 
     try:
         data = json.loads(content)
-    except json.JSONDecodeError:
-        # 4. Некорректный JSON — тоже возвращаем []
+    except json.JSONDecodeError as e:
+        logger.error(f"Ошибка парсинга JSON в файле {input_path}: {e}")
         return []
 
-    # 3. Содержимое не список
     if not isinstance(data, list):
+        logger.error(f"Данные в файле {input_path} не являются списком (тип: {type(data).__name__})")
         return []
 
+    logger.info(f"Успешно загружено {len(data)} транзакций из {input_path}")
     return data
 
+if __name__ == "__main__":
+    result = get_transactions_dict('operations.json')
+    print(f"Загружено транзакций: {len(result)}")
 
-# if __name__ == "__main__":
-#     result = get_transactions_dict('operations.json')
-#     print(f"Загружено транзакций: {len(result)}")
-#     print(result)
+    # Сохраняем результат в отдельный файл для визуализации
+    output_path = Path("transactions_output.json")
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, ensure_ascii=False, indent=4)
+
+    print(f"Результат сохранён в: {output_path.resolve()}")
+
