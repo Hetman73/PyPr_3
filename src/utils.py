@@ -10,22 +10,34 @@ from pathlib import Path
 # ==========================================
 # 1. НАСТРОЙКА ЛОГИРОВАНИЯ (перед функцией)
 # ==========================================
-# Создаем отдельный логгер для модуля utils
+
+# Создаем логгер для модуля
 logger = logging.getLogger("utils")
-logger.setLevel(logging.DEBUG) # Уровень не меньше DEBUG
+logger.setLevel(logging.DEBUG)
 
-# Создаем обработчик файла (file_handler)
-file_handler = logging.FileHandler("utils.log", mode="a", encoding="utf-8")
+# Защита от дублирования хендлеров, если модуль импортируется несколько раз
+if not logger.handlers:
+    # Вычисляем путь к корню проекта (на 2 уровня выше от src/utils.py)
+    base_dir = Path(__file__).resolve().parent.parent
+    log_dir = base_dir / "logs"
 
-# Создаем форматер (file_formatter)
-file_formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S"
-)
+    # Создаем папку logs, если её еще нет
+    log_dir.mkdir(exist_ok=True)
 
-# Устанавливаем форматер для обработчика и добавляем его к логгеру
-file_handler.setFormatter(file_formatter)
-logger.addHandler(file_handler)
+    log_file = log_dir / "app.log"
+
+    # Создаем обработчик файла (mode="w" - перезапись при запуске)
+    file_handler = logging.FileHandler(log_file, mode="w", encoding="utf-8")
+
+    # Создаем форматер
+    file_formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
+    # Устанавливаем форматер и добавляем хендлер к логгеру
+    file_handler.setFormatter(file_formatter)
+    logger.addHandler(file_handler)
+
 
 # ==========================================
 # 2. САМА ФУНКЦИЯ
@@ -33,7 +45,6 @@ logger.addHandler(file_handler)
 def get_transactions_dict(input_file: str, base_dir: Path | None = None) -> list[dict]:
     """
     Загружает список транзакций из JSON-файла.
-
     """
     if base_dir is None:
         base_dir = Path(__file__).resolve().parent.parent
@@ -69,8 +80,9 @@ def get_transactions_dict(input_file: str, base_dir: Path | None = None) -> list
     logger.info(f"Успешно загружено {len(data)} транзакций из {input_path}")
     return data
 
+
 if __name__ == "__main__":
-    result = get_transactions_dict('operations.json')
+    result = get_transactions_dict("operations.json")
     print(f"Загружено транзакций: {len(result)}")
 
     # Сохраняем результат в отдельный файл для визуализации
@@ -79,4 +91,3 @@ if __name__ == "__main__":
         json.dump(result, f, ensure_ascii=False, indent=4)
 
     print(f"Результат сохранён в: {output_path.resolve()}")
-
