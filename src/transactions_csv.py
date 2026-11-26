@@ -1,11 +1,11 @@
 import csv
 
 
-def read_csv_to_dict(path='data/transactions.csv') -> dict:
-    """ Функция для считывания финансовых операций из CSV выдает
-        список словарей с транзакциями. """
-    with open(path, newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f, delimiter=';')
+def read_csv_to_dict(path="data/transactions.csv") -> dict:
+    """Функция для считывания финансовых операций из CSV выдает
+    список словарей с транзакциями."""
+    with open(path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f, delimiter=";")
         # Превращаем reader в список словарей, пропуская полностью пустые строки
         return [row for row in reader if any(row.values())]
 
