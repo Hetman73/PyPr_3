@@ -220,6 +220,33 @@ filename
 
 
 
+### Модуль transactions_csv
+**Функция `read_csv_to_dict`**
+  + Как работает эта функция:
+   
+Функция 
+**read_csv_to_dict**
+
+```python
+Функция для считывания финансовых операций из файла CSV выдает
+        список словарей с транзакциями.
+```
+
+
+
+
+### Модуль transactions_excel
+**Функция `read_xlsx_to_dict`**
+  + Как работает эта функция:
+   
+Функция 
+**read_xlsx_to_dict**
+
+```python
+Функция для считывания финансовых операций из xlsx, выдает
+        список словарей с транзакциями.
+```
+
 
 
 
@@ -342,6 +369,27 @@ def sort_by_date_input(request):
 * **`def test_eur_transaction_uses_api(mock_get, mock_getenv):`**: Успех: Если валюта EUR, тоже идет запрос к API.
 
 
+
+
+### `test_transactions_csv`
+
+💡 Использованы инструменты тестирования: `@patch('builtins.open', new_callable=mock_open, read_data="id;amount\n1;100\n")`.
+
+* **def test_returns_list(mock_file)**: Проверяем, что результат — это список.
+* **def test_parses_data_correctly(mock_file)**: Проверяем, что данные читаются правильно (через точку с запятой).
+* **def test_ignores_empty_rows(mock_file)**: Проверяем, что пустые строки игнорируются.
+
+
+
+
+### `test_transactions_excel`
+
+💡 Использованы инструменты тестирования: `@patch('pandas.read_excel')`.
+
+* **`def test_read_excel_mock(mock_read_excel)`**:
+* **assert len(result) == 2**:
+* **assert result[0]['id'] == 1**:
+* **assert result[1]['amount'] == 200 == 1**:
 
 
 

@@ -12,7 +12,7 @@ def read_xlsx_to_dict(path='data/transactions_excel.xlsx') -> dict:
     return excel_data.to_dict(orient='records')
 
 
-if __name__ == '__main__':
-    data = read_xlsx_to_dict()
-    print(f"Количество записей: {len(data)}")
-    print(data[:2])  # Выведет первые 2 словаря
+# if __name__ == '__main__':
+#     data = read_xlsx_to_dict()
+#     print(f"Количество записей: {len(data)}")
+#     print(data[:2])  # Выведет первые 2 словаря

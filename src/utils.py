@@ -81,13 +81,13 @@ def get_transactions_dict(input_file: str, base_dir: Path | None = None) -> list
     return data
 
 
-if __name__ == "__main__":
-    result = get_transactions_dict("operations.json")
-    print(f"Загружено транзакций: {len(result)}")
-
-    # Сохраняем результат в отдельный файл для визуализации
-    output_path = Path("transactions_output.json")
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(result, f, ensure_ascii=False, indent=4)
-
-    print(f"Результат сохранён в: {output_path.resolve()}")
+# if __name__ == "__main__":
+#     result = get_transactions_dict("operations.json")
+#     print(f"Загружено транзакций: {len(result)}")
+#
+#     # Сохраняем результат в отдельный файл для визуализации
+#     output_path = Path("transactions_output.json")
+#     with open(output_path, "w", encoding="utf-8") as f:
+#         json.dump(result, f, ensure_ascii=False, indent=4)
+#
+#     print(f"Результат сохранён в: {output_path.resolve()}")
